@@ -1,0 +1,146 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); color: var(--color-text-primary); }
+  .nav { background: #fff8f6; border-bottom: 0.5px solid #f0d0c8; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; }
+  .nav-logo { font-size: 18px; font-weight: 500; color: #c4617a; display: flex; align-items: center; gap: 8px; }
+  .nav-links { display: flex; gap: 0; }
+  .nav-links button { background: none; border: none; cursor: pointer; padding: 8px 14px; font-size: 13px; color: var(--color-text-secondary); border-radius: var(--border-radius-md); transition: background 0.15s; }
+  .nav-links button:hover, .nav-links button.active { background: #fce8ee; color: #c4617a; }
+  .page { display: none; }
+  .page.active { display: block; }
+
+  .hero { background: linear-gradient(135deg, #fff5f7 0%, #fdf0e8 100%); padding: 4rem 2rem 3rem; text-align: center; }
+  .hero h1 { font-size: 32px; font-weight: 500; color: #b5506a; margin-bottom: 1rem; }
+  .hero p { font-size: 16px; color: var(--color-text-secondary); max-width: 560px; margin: 0 auto 2rem; line-height: 1.7; }
+  .hero-btn { background: #c4617a; color: white; border: none; padding: 12px 28px; border-radius: 24px; font-size: 15px; cursor: pointer; }
+  .hero-btn:hover { background: #b5506a; }
+
+  .section { padding: 2.5rem 2rem; }
+  .section-title { font-size: 20px; font-weight: 500; color: #b5506a; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .card { background: var(--color-background-primary); border: 0.5px solid #f0d0c8; border-radius: var(--border-radius-lg); padding: 1.25rem; cursor: pointer; transition: border-color 0.15s; }
+  .card:hover { border-color: #c4617a; }
+  .card-tag { font-size: 11px; font-weight: 500; color: #c4617a; background: #fce8ee; border-radius: 20px; padding: 3px 10px; display: inline-block; margin-bottom: 10px; }
+  .card h3 { font-size: 15px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; line-height: 1.4; }
+  .card p { font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; }
+  .card-read { font-size: 13px; color: #c4617a; margin-top: 12px; display: flex; align-items: center; gap: 4px; }
+
+  .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 2rem; }
+  .feature-box { background: #fff5f7; border: 0.5px solid #f0d0c8; border-radius: var(--border-radius-lg); padding: 1.25rem; text-align: center; }
+  .feature-icon { font-size: 28px; color: #c4617a; margin-bottom: 10px; }
+  .feature-box h4 { font-size: 14px; font-weight: 500; color: #b5506a; margin-bottom: 6px; }
+  .feature-box p { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+
+  .article-full { max-width: 640px; margin: 0 auto; }
+  .article-full h2 { font-size: 22px; font-weight: 500; color: #b5506a; margin-bottom: 1rem; line-height: 1.35; }
+  .article-full .meta { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 1.5rem; display: flex; gap: 12px; align-items: center; }
+  .article-full p { font-size: 15px; line-height: 1.8; color: var(--color-text-primary); margin-bottom: 1.2rem; }
+  .article-full h3 { font-size: 17px; font-weight: 500; color: #b5506a; margin: 1.5rem 0 0.75rem; }
+  .back-btn { background: none; border: 0.5px solid #f0d0c8; border-radius: 20px; padding: 6px 16px; font-size: 13px; color: #c4617a; cursor: pointer; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 6px; }
+  .back-btn:hover { background: #fce8ee; }
+
+  .tips-list { display: flex; flex-direction: column; gap: 16px; }
+  .tip-item { display: flex; gap: 16px; align-items: flex-start; background: var(--color-background-primary); border: 0.5px solid #f0d0c8; border-radius: var(--border-radius-lg); padding: 1.25rem; }
+  .tip-num { width: 36px; height: 36px; min-width: 36px; background: #fce8ee; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500; color: #c4617a; }
+  .tip-item h4 { font-size: 15px; font-weight: 500; margin-bottom: 6px; color: var(--color-text-primary); }
+  .tip-item p { font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; }
+
+  .warning-box { background: #fff5f0; border: 0.5px solid #f5c4b3; border-left: 3px solid #d85a30; border-radius: var(--border-radius-md); padding: 1rem 1.25rem; margin-bottom: 14px; }
+  .warning-box h4 { font-size: 14px; font-weight: 500; color: #993c1d; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+  .warning-box p { font-size: 13px; color: #b84d22; line-height: 1.6; }
+
+  .quote-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .quote-card { background: #fff5f7; border: 0.5px solid #f0d0c8; border-radius: var(--border-radius-lg); padding: 1.5rem; text-align: center; }
+  .quote-text { font-family: var(--font-serif); font-size: 15px; color: #b5506a; line-height: 1.7; margin-bottom: 12px; }
+  .quote-author { font-size: 12px; color: var(--color-text-secondary); }
+
+  .about-box { max-width: 560px; margin: 0 auto; text-align: center; }
+  .about-box .avatar { width: 80px; height: 80px; background: #fce8ee; border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; font-size: 32px; color: #c4617a; }
+  .about-box h2 { font-size: 22px; font-weight: 500; color: #b5506a; margin-bottom: 1rem; }
+  .about-box p { font-size: 15px; color: var(--color-text-secondary); line-height: 1.8; margin-bottom: 1rem; }
+  .divider { border: none; border-top: 0.5px solid #f0d0c8; margin: 2rem 0; }
+
+  .footer { background: #fff8f6; border-top: 0.5px solid #f0d0c8; padding: 1.5rem 2rem; text-align: center; font-size: 13px; color: var(--color-text-secondary); }
+</style>
+
+<h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden">Website Ruang Cinta Sehat — artikel, tips, dan inspirasi membangun hubungan sehat</h2>
+
+<nav class="nav">
+  <div class="nav-logo"><i class="ti ti-heart" aria-hidden="true"></i> Ruang Cinta Sehat</div>
+  <div class="nav-links">
+    <button class="active" onclick="showPage('home',this)">Home</button>
+    <button onclick="showPage('artikel',this)">Artikel</button>
+    <button onclick="showPage('tips',this)">Tips</button>
+    <button onclick="showPage('batasan',this)">Batasan</button>
+    <button onclick="showPage('inspirasi',this)">Inspirasi</button>
+    <button onclick="showPage('tentang',this)">Tentang</button>
+  </div>
+</nav>
+
+<div id="home" class="page active">
+  <div class="hero">
+    <h1>Cinta yang sehat dimulai dari diri sendiri</h1>
+    <p>Temukan panduan, artikel, dan inspirasi untuk membangun hubungan yang dewasa, penuh rasa hormat, dan saling menguatkan.</p>
+    <button class="hero-btn" onclick="showPage('artikel', document.querySelector('.nav-links button:nth-child(2)'))">Baca Artikel <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><i class="ti ti-sparkles" aria-hidden="true"></i> Artikel terpopuler</div>
+    <div class="card-grid">
+      <div class="card" onclick="showArticle('komunikasi')">
+        <span class="card-tag">Komunikasi</span>
+        <h3>Cara Membangun Komunikasi yang Sehat dengan Pasangan</h3>
+        <p>Komunikasi bukan sekadar berbicara. Ini tentang mendengar dan memahami.</p>
+        <div class="card-read"><i class="ti ti-book" aria-hidden="true"></i> Baca selengkapnya</div>
+      </div>
+      <div class="card" onclick="showArticle('tandatanda')">
+        <span class="card-tag">Hubungan</span>
+        <h3>5 Tanda Hubungan yang Tidak Sehat</h3>
+        <p>Kenali tanda-tanda sebelum terlambat dan lindungi dirimu.</p>
+        <div class="card-read"><i class="ti ti-book" aria-hidden="true"></i> Baca selengkapnya</div>
+      </div>
+      <div class="card" onclick="showArticle('batasan')">
+        <span class="card-tag">Batasan</span>
+        <h3>Pentingnya Batasan dalam Hubungan</h3>
+        <p>Batasan bukan tembok — ia adalah bentuk cinta yang dewasa.</p>
+        <div class="card-read"><i class="ti ti-book" aria-hidden="true"></i> Baca selengkapnya</div>
+      </div>
+      <div class="card" onclick="showArticle('cintabertahan')">
+        <span class="card-tag">Cinta</span>
+        <h3>Cara Menjaga Cinta Tetap Bertahan Lama</h3>
+        <p>Cinta butuh perawatan, seperti tanaman yang perlu disiram setiap hari.</p>
+        <div class="card-read"><i class="ti ti-book" aria-hidden="true"></i> Baca selengkapnya</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="background: #fff8f6;">
+    <div class="section-title"><i class="ti ti-star" aria-hidden="true"></i> Kenapa hubungan sehat itu penting?</div>
+    <div class="feature-grid">
+      <div class="feature-box"><div class="feature-icon"><i class="ti ti-heart-handshake" aria-hidden="true"></i></div><h4>Saling menghormati</h4><p>Fondasi utama hubungan yang tumbuh dan bertahan</p></div>
+      <div class="feature-box"><div class="feature-icon"><i class="ti ti-messages" aria-hidden="true"></i></div><h4>Komunikasi terbuka</h4><p>Berbicara jujur tanpa rasa takut dihakimi</p></div>
+      <div class="feature-box"><div class="feature-icon"><i class="ti ti-shield-check" aria-hidden="true"></i></div><h4>Rasa aman</h4><p>Merasa nyaman dan aman secara emosional bersama pasangan</p></div>
+      <div class="feature-box"><div class="feature-icon"><i class="ti ti-growth" aria-hidden="true"></i></div><h4>Tumbuh bersama</h4><p>Mendukung mimpi dan pertumbuhan satu sama lain</p></div>
+    </div>
+  </div>
+</div>
+
+<div id="artikel" class="page">
+  <div id="artikel-list">
+    <div class="section">
+      <div class="section-title"><i class="ti ti-article" aria-hidden="true"></i> Semua artikel</div>
+      <div class="card-grid">
+        <div class="card" onclick="showArticle('komunikasi')"><span class="card-tag">Komunikasi</span><h3>Cara Membangun Komunikasi yang Sehat dengan Pasangan</h3><p>Belajar bicara dari hati ke hati tanpa menyakiti.</p><div class="card-read"><i class="ti ti-book" aria-hidden="true"></i> Baca</div></div>
+        <div class="card" onclick="showArticle('tandatanda')"><span class="card-tag">Hubungan</span><h3>5 Tanda Hubungan yang Tidak Sehat</h3><p>Waspadai pola-pola yang mungkin sudah terjadi tanpa kamu sadari.</p><div class="card-read"><i class="ti ti-book" aria-hidden="true"></i> Baca</div></div>
+        <div class="card" onclick="showArticle('batasan')"><span class="card-tag">Batasan</span><h3>Pentingnya Batasan dalam Hubungan</h3><p>Menetapkan batasan adalah tanda kematangan emosional.</p><div class="card-read"><i class="ti ti-book" aria-hidden="true"></i> Baca</div></div>
+        <div class="card" onclick="showArticle('cintabertahan')"><span class="card-tag">Cinta</span><h3>Cara Menjaga Cinta Tetap Bertahan Lama</h3><p>Strategi nyata untuk mempertahankan kehangatan hubungan.</p><div class="card-read"><i class="ti ti-book" aria-hidden="true"></i> Baca</div></div>
+        <div class="card" onclick="showArticle('kepercayaan')"><span class="card-tag">Kepercayaan</span><h3>Membangun Kepercayaan yang Kuat</h3><p>Kepercayaan dibangun perlahan dan bisa runtuh dalam sekejap.</p><div class="card-read"><i class="ti ti-book" aria-hidden="true"></i> Baca</div></div>
+        <div class="card" onclick="showArticle('konflik')"><span class="card-tag">Konflik</span><h3>Cara Sehat Menyelesaikan Konflik dengan Pasangan</h3><p>Bertengkar bukan berarti hubungan bermasalah — caranya yang menentukan.</p><div class="card-read"><i class="ti ti-book" aria-hidden="true"></i> Baca</div></div>
+      </div>
+    </div>
+  </div>
+  <div id="artikel-detail" style="display:none;">
+    <div class="section">
+      <button class="back-btn" onclick="backToList()"><i class="ti ti-arrow-left" aria-hidden="true"></i> Kembali ke artikel</button>
+      <div class="article-ful
